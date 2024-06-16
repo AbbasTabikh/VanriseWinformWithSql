@@ -69,4 +69,23 @@ public class StudentDataManager : BaseDataManager
         await connection.CloseAsync();
         return students;
     }
+
+    public async Task<int> InsertWithSp(params SqlParameter[] sqlParameters)
+    {
+        return await ExecuteNonQuery(Resources.AddStudentProcedureName, sqlParameters);
+    }
+
+    public async Task<int> UpdateWithSp(params SqlParameter[] sqlParameters)
+    {
+        return await ExecuteNonQuery(Resources.UpdateStudentProcedureName, sqlParameters);
+    }
+
+    public async Task<List<Student>> GetWithSp(params SqlParameter[]? sqlParameters)
+    {
+        if (sqlParameters is null)
+        {
+            return await GetSpItems<Student>(Resources.GetAllStudents, null);
+        }
+        return await GetSpItems<Student>(Resources.GetFilteredStudents, sqlParameters!);
+    }
 }

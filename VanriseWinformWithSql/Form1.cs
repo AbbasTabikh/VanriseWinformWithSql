@@ -23,7 +23,7 @@ namespace VanriseWinformWithSql
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            students = await _studentManager.GetAll();
+            students = await _studentManager.GetAllWithSp();
             dataGridView1.DataSource = students;
         }
 
@@ -55,7 +55,7 @@ namespace VanriseWinformWithSql
                 dataGridView1.DataSource = students;
                 return;
             }
-            students = await _studentManager.GetFiltered(search_box.Text);
+            students = await _studentManager.GetFilteredWithSp(search_box.Text);
             dataGridView1.DataSource = students;
         }
 
@@ -81,7 +81,7 @@ namespace VanriseWinformWithSql
 
         private async void OnStudentAdded(object? sender, Student e)
         {
-            students = await _studentManager.GetAll();
+            students = await _studentManager.GetAllWithSp();
             dataGridView1.DataSource = students;
         }
         /* End Event Handlers */

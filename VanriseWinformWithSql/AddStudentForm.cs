@@ -50,7 +50,7 @@ namespace VanriseWinformWithSql
             if (EditStudent is null)
             {
                 var newStudent = new Student { Name = nameTextBox.Text, Gender = (Gender)genderDropDown.SelectedItem };
-                await _studentManager.Insert(newStudent);
+                await _studentManager.InsertWithSp(newStudent);
                 NotifyStudentAdded(newStudent);
                 return;
             }
@@ -58,7 +58,7 @@ namespace VanriseWinformWithSql
             //for editing student
             EditStudent.Name = nameTextBox.Text;
             EditStudent.Gender = (Gender)genderDropDown.SelectedItem;
-            await _studentManager.Update(EditStudent);
+            await _studentManager.UpdatetWithSp(EditStudent);
             NotifyStudentEdited();
             EditStudent = null;
             Close();

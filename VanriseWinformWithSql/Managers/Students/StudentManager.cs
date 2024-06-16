@@ -1,4 +1,5 @@
-﻿using VanriseWinformWithSql.Models;
+﻿using System.Data.SqlClient;
+using VanriseWinformWithSql.Models;
 
 namespace VanriseWinformWithSql.Managers.Students;
 
@@ -30,4 +31,35 @@ public class StudentManager
     {
         return await _studentDataManager.GetFiltered(filter);
     }
+
+    public async Task InsertWithSp(Student student)
+    {
+        var nameParam = new SqlParameter { ParameterName = "@Name", Value = student.Name };
+        var genderParam = new SqlParameter { ParameterName = "@Gender", Value = student.Gender };
+    
+        await _studentDataManager.InsertWithSp(nameParam, genderParam);
+    }
+
+    public async Task UpdatetWithSp(Student student)
+    {
+        var nameParam = new SqlParameter { ParameterName = "@Name", Value = student.Name };
+        var genderParam = new SqlParameter { ParameterName = "@Gender", Value = student.Gender };
+        var idParam = new SqlParameter { ParameterName = "@Id", Value = student.Id };
+
+        await _studentDataManager.UpdateWithSp(nameParam, genderParam, idParam);
+    }
+
+    public async Task<List<Student>> GetFilteredWithSp(string filterValue)
+    {
+        var filterParam = new SqlParameter { ParameterName = "@filterValue", Value = filterValue };
+
+        return await _studentDataManager.GetWithSp(filterParam);
+    }
+
+    public async Task<List<Student>> GetAllWithSp()
+    {
+        return await _studentDataManager.GetWithSp(null);
+    }
+
+
 }
